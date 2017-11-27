@@ -109,5 +109,28 @@ public class CustomGitHubServiceImpl implements CustomGitHubService {
 		return null;
 	}
 
+	public List<CustomGitHubBean> getFiles(List<String> fileExtensions, List<String> organizations, String keyspace) throws CustomGitHubException{
+		List<CustomGitHubBean> customGitHubBeanList = null;
+		try {
+			List<String> orgNames = new ArrayList<String>();
+			for(String org: organizations) {
+				if(org != null && !org.isEmpty()) {
+					String orgName = org;
+					if(org.startsWith("https://") || org.startsWith("http://")) {
+						orgName = org.lastIndexOf("/")+1 < org.length() ? org.substring(org.lastIndexOf("/") +1) : null;
+					}
+					if(orgName != null && !orgName.isEmpty()) 
+						orgNames.add(orgName);
+				}
+			}
+			CustomGitHubDao customGitHubDao = new CustomGitHubDaoImpl(keyspace);
+			customGitHubBeanList = customGitHubDao.getFiles(fileExtensions,orgNames);
+		} catch (Exception e) {
+			LOGGER.log(Level.SEVERE,CustomGitHubMessages.PROCESSING_ERROR, e);
+			throw new CustomGitHubException(CustomGitHubMessages.PROCESSING_ERROR);
+		}
+		return customGitHubBeanList;
+	}
+
 	
 }

@@ -3,6 +3,8 @@
  */
 package com.test.sri.customgithub.service;
 
+import java.util.List;
+
 import org.json.JSONArray;
 
 import com.test.sri.customgithub.domain.CustomGitHubBean;
@@ -20,6 +22,9 @@ public interface CustomGitHubService {
 	public static final String EXTENSION_QUALIFIER = "extension:";
 	
 	
-	public CustomGitHubBean createFiles(JSONArray orgs, JSONArray extns, String keyspace) throws CustomGitHubException;	
+	public CustomGitHubBean createFiles(JSONArray orgs, JSONArray extns, String keyspace) throws CustomGitHubException;
+
+
+	public List<CustomGitHubBean> getFiles(List<String> fileExtensions, List<String> organizations, String keyspace) throws CustomGitHubException;	
 
 }

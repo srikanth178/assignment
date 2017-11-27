@@ -15,4 +15,6 @@ public interface CustomGitHubDao {
 	
 	public void insert(List<CustomGitHubBean> customGitHubBeanList);
 
+	public List<CustomGitHubBean> getFiles(List<String> fileExtensions, List<String> orgNames);
+
 }

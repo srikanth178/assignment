@@ -3,7 +3,11 @@
  */
 package com.test.sri.customgithub.dao.cassandra;
 
+import java.util.List;
+
 import com.datastax.driver.core.Session;
+import com.datastax.driver.core.Statement;
+import com.datastax.driver.core.querybuilder.QueryBuilder;
 import com.test.sri.customgithub.domain.CustomGitHubBean;
 
 /**
@@ -57,11 +61,20 @@ public class CassandraSchema {
 	public String getInsertQuery(CustomGitHubBean customGitHubBean) {
 		StringBuilder sb = new StringBuilder("INSERT INTO fileExtensions (file_ref,file_name,file_extension,organization) VALUES");
 		sb.append("(")
-		.append(customGitHubBean.getFileRef())
-		.append(customGitHubBean.getFileName())
-		.append(customGitHubBean.getExtension())
-		.append(customGitHubBean.getOrganization())
-		.append(");");
+			.append(customGitHubBean.getFileRef())
+			.append(customGitHubBean.getFileName())
+			.append(customGitHubBean.getExtension())
+			.append(customGitHubBean.getOrganization())
+			.append(");");
 		return sb.toString();
+	}
+
+	public Statement getDataQuery(List<String> fileExtensions, List<String> orgNames) {
+		Statement statement = QueryBuilder.select()
+								.all()
+								.from(TABLE_NAME)
+								.where(QueryBuilder.in("file_extension", fileExtensions))
+								.and(QueryBuilder.in("organizations", orgNames));
+		return statement;
 	}
 }

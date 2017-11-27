@@ -15,4 +15,6 @@ public interface CustomGitHubDataSource {
 	
 	public void insert(List<CustomGitHubBean> customGitHubBeanList);
 
+	public List<CustomGitHubBean> getData(List<String> fileExtensions, List<String> orgNames);
+
 }

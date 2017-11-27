@@ -25,5 +25,8 @@ public class CustomGitHubDaoImpl implements CustomGitHubDao {
 	public void insert(List<CustomGitHubBean> customGitHubBeanList) {
 		dataSource.insert(customGitHubBeanList);
 	}
+	public List<CustomGitHubBean> getFiles(List<String> fileExtensions, List<String> orgNames) {
+		return dataSource.getData(fileExtensions,orgNames);
+	}
 
 }
